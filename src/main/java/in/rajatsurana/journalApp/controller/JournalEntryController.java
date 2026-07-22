@@ -1,7 +1,7 @@
 package in.rajatsurana.journalApp.controller;
 
 import in.rajatsurana.journalApp.entity.JournalEntry;
-import org.springframework.stereotype.Controller;
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 public class JournalEntryController {
-    private Map<Long,JournalEntry> journalEntryMap = new HashMap<>();
+    private final Map<ObjectId, JournalEntry> journalEntryMap = new HashMap<>();
 
     @GetMapping("get")
     public List<JournalEntry> getAll(){
@@ -20,7 +20,7 @@ public class JournalEntryController {
 
     @PostMapping
     public boolean createEntry(@RequestBody JournalEntry journalEntry){
-        journalEntryMap.put(Long.valueOf(journalEntry.getId()),journalEntry);
+        journalEntryMap.put(journalEntry.getId(),journalEntry);
         return true;
     }
 
@@ -35,7 +35,7 @@ public class JournalEntryController {
     }
 
     @PutMapping("/id/{id}")
-    public JournalEntry update(@PathVariable Long id,@RequestBody JournalEntry journalEntry){
+    public JournalEntry update(@PathVariable ObjectId id, @RequestBody JournalEntry journalEntry){
         return journalEntryMap.put(id,journalEntry);
     }
 }

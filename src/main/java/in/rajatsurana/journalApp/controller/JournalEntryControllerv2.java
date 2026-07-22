@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +20,12 @@ public class JournalEntryControllerv2 {
 
     @GetMapping("get")
     public List<JournalEntry> getAll() {
-        return null;
+        return journalEntryService.getAll();
     }
 
     @PostMapping
     public boolean createEntry(@RequestBody JournalEntry journalEntry) {
+        journalEntry.setDate(LocalDateTime.now());
         journalEntryService.saveEntry(journalEntry);
         return true;
     }
